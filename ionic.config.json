@@ -1,5 +1,7 @@
 {
   "name": "IoncNew",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular"
 }
