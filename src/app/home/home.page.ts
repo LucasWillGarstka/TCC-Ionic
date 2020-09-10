@@ -63,6 +63,7 @@ export class HomePage implements OnInit {
     try {
       await this.map.one(GoogleMapsEvent.MAP_READY);
 
+      this.addMarkersToMap(this.markers)
       this.addOriginMarker();
     } catch (error) {
       console.error(error);
@@ -112,6 +113,7 @@ export class HomePage implements OnInit {
   async calcRoute(item: any) {
     this.search = '';
     this.destination = item;
+    
 
 
     const info: any = await Geocoder.geocode({ address: this.destination.description })
@@ -159,12 +161,13 @@ export class HomePage implements OnInit {
     });
   }
 
-  //limpa todos marcadores, LEMBRAR NA HORA DE REFAZER, PRA DEIXAR OS SETADOS TAMBÉM, SE NÃO SÓ FICA O DESTINO
+  //limpa todos marcadores, exceto Localização atual e os pontos fixos = ônibus.
   async back() {
     try {
       await this.map.clear();
       this.destination = null;
       this.addOriginMarker();
+      this.addMarkersToMap(this.markers);
     
     } catch (error) {
       console.log(error);
@@ -172,26 +175,37 @@ export class HomePage implements OnInit {
     }
   }
 
-  //TESTAR, tentei adicionar o "markers" em todos os métodos, porém, não imprimiu nem no log..
   markers: any = [
     {
       title: "Ônibus Rota Pe Ulrico",
-      latitude: "-26.06883406",
-      longitude: "-53.03480816"
+      latitude: -26.06883406,
+      longitude: -53.03480816
     },
     {
       title: "Ônibus Rota Cango",
-      latitude: "-26.08671845",
-      longitude: "-53.04239993"
+      latitude: -26.08671845,
+      longitude: -53.04239993
     },
     {
       title: "Ônibus Rota Sta Bárbara",
-      latitude: "-26.08463345",
-      longitude: "-53.09092286"
+      latitude: -26.08463345,
+      longitude: -53.09092286
     }
   ];
 
-  
+  async addMarkersToMap(markers) {
+    for (let marker of markers) {
+      let position = { "lat": marker.latitude, "lng": marker.longitude }
+      this.originMarker = this.map.addMarkerSync({
+        title: marker.title,
+        icon: '#000',
+        animation: GoogleMapsAnimation.DROP,
+        position: position,
+        locs: ''
+      });
+    }
+  }
+
 }
 
 //ESSA PARTE É O OUTRO PROJETO, ONDE AO CLICAR NA ROTA FIXA, ELE ABRE O GOOGLE MAPS..
@@ -219,21 +233,6 @@ export class HomePage implements OnInit {
 
   ionViewDidEnter() {
     this.showMap();
-  }
-
-  addMarkersToMap(markers) {
-    for (let marker of markers) {
-      let position = new google.maps.LatLng(marker.latitude, marker.longitude);
-      let mapMarker = new google.maps.Marker({
-        position: position,
-        title: marker.title,
-        latitude: marker.latitude,
-        longitude: marker.longitude
-      });
-
-      mapMarker.setMap(this.map);
-      this.addInfoWindowToMarker(mapMarker);
-    }
   }
 
   addInfoWindowToMarker(marker) {
