@@ -208,32 +208,8 @@ export class HomePage implements OnInit {
 
 }
 
-//ESSA PARTE É O OUTRO PROJETO, ONDE AO CLICAR NA ROTA FIXA, ELE ABRE O GOOGLE MAPS..
+/**
 
-/** infoWindows: any = [];
-  markers: any = [
-    {
-      title: "Ônibus Rota Pe Ulrico",
-      latitude: "-26.06883406",
-      longitude: "-53.03480816"
-    },
-    {
-        title: "Ônibus Rota Cango",
-        latitude: "-26.08671845",
-        longitude: "-53.04239993"
-    },
-    {
-        title: "Ônibus Rota Sta Bárbara",
-        latitude: "-26.08463345",
-        longitude: "-53.09092286"
-    }
-  ];
-
-  constructor() {}
-
-  ionViewDidEnter() {
-    this.showMap();
-  }
 
   addInfoWindowToMarker(marker) {
     let infoWindowContent = '<div id="content">' +
@@ -262,25 +238,5 @@ export class HomePage implements OnInit {
     });
     this.infoWindows.push(infoWindow);
   }
-
-  closeAllInfoWindows() {
-    for(let window of this.infoWindows) {
-      window.close();
-    }
-  }
-
-  
-  
-
-  showMap() {
-    
-    const location = new google.maps.LatLng(-26.0790979, -53.0533527);
-    const options = {
-      center: location,
-      zoom: 15,
-      disableDefaultUI: true
-    }
-    this.map = new google.maps.Map(this.mapRef.nativeElement, options);
-    this.addMarkersToMap(this.markers);
   } */
 
